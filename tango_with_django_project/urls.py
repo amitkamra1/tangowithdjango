@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
+#this is initiated when someone navigates to rango and this calls the url script for the specific application
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'tango_with_django_project.views.home', name='home'),
@@ -17,3 +19,10 @@ urlpatterns = patterns('',
 
     url(r'^rango/', include('rango.urls')), # ADD THIS NEW TUPLE!
 )
+
+if settings.DEBUG:
+  urlpatterns += patterns(
+    'django.views.static',
+    (r'media/(?P<path>.*)',
+      'serve',
+      {'document_root': settings.MEDIA_ROOT}), )
